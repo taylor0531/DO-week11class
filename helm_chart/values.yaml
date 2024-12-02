@@ -1,0 +1,3 @@
+configValue: "Config from Helm and argocd"
+image: week9wiit7501.azurecr.io/week11-example/ewagner14:v2
+imagePullSecret: acr-pull-secret-argocd

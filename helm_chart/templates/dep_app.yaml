@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-flask-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-flask-app
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret }}
+      containers:
+      - name: flask-app
+        image: "{{ .Values.image }}"
+        env:
+        - name: CONFIG_VALUE
+          value: "{{ .Values.configValue }}"
+        - name: REDIS_HOST
+          value: "{{ .Release.Name }}-redis-service" # Redis service name
+        - name: REDIS_PORT
+          value: "6379"          # Redis service port
+        ports:
+        - containerPort: 5000
