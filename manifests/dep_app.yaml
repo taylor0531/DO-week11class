@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:
+  template:
+    metadata:
+      labels:
+        app: <where does this point?>
+    spec:
+      imagePullSecrets:
+      - name: <this is new to class>
+      containers:
+      - name: flask-app
+        image: 
+        env:
+        - name: CONFIG_VALUE
+          value: "<put something witty here>"
+        - name: REDIS_HOST
+          value: "<what is this going to be?>" # Redis service name
+        - name: REDIS_PORT
+          value: "6379"          # Redis service port
+        ports:
+        - containerPort: 5000
