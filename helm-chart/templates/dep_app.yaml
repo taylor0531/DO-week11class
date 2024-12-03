@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-app
+  name: {{ .Release.Name }}-flask-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask-app
+      app: {{ .Release.Name }}-flask-app
   template:
     metadata:
       labels:
-        app: flask-app
+        app: {{ .Release.Name }}-flask-app
     spec:
       imagePullSecrets:
-        - name: acr-pull-secret
+        - name: {{ .Values.imagePullSecret }}
       containers:
         - name: flask-app
-          image: week9wiit7501.azurecr.io/week11-example/ewagner14:v1
+          image: "{{ .Values.image }}"
           env:
             - name: CONFIG_VALUE
-              value: "Hello from Kubernetes!"
+              value: "{{ .Values.configValue }}"
             - name: REDIS_HOST
-              value: "redis-service" # Redis service name
+              value: "{{ .Release.Name }}-redis-service" # Redis service name
             - name: REDIS_PORT
               value: "6379"          # Redis service port
           ports:

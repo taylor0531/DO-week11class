@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-service
+  name: {{ .Release.Name }}-flask-service
 spec:
   selector:
-    app: flask-app
+    app: {{ .Release.Name }}-flask-app
   ports:
     - protocol: TCP
       port: 80
